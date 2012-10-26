@@ -72,7 +72,7 @@ public class Main {
 
     protected Map<String, Object> changeLogParameters = new HashMap<String, Object>();
 
-    public static void main(String args[]) throws CommandLineParsingException, IOException {
+    public static void main(String args[]) throws Exception, IOException {
         try {
             String shouldRunProperty = System.getProperty(Liquibase.SHOULD_RUN_SYSTEM_PROPERTY);
             if (shouldRunProperty != null && !Boolean.valueOf(shouldRunProperty)) {
@@ -133,8 +133,7 @@ public class Main {
                     LogFactory.getLogger().severe(message, e);
                     System.out.println(generateLogLevelWarningMessage());
                 }
-                //System.exit(-1);
-                return;
+                throw e;
             }
 
             if ("update".equals(main.command)) {
@@ -152,8 +151,7 @@ public class Main {
             } catch (Exception e1) {
                 e.printStackTrace();
             }
-            //System.exit(-3);
-            return;
+             throw e;
         }
         //System.exit(0);
     }

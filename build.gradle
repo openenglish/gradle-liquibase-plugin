@@ -1,6 +1,7 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'signing'
+apply plugin:  'idea'
 
 version = '0.6.1'
 group = 'com.augusttechgroup'
@@ -61,26 +62,6 @@ install {
     pom.project(pomConfiguration)
   }
 }
-
-
-uploadPublished {
-  dependsOn << [ signArchives ]
-  repositories.mavenDeployer {
-    beforeDeployment { deployment ->
-      signPom(deployment)
-    }
-    name = 'mavenCentralReleaseDeployer'
-    repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") { 
-      authentication(userName: mavenCentralUsername, password: mavenCentralPassword)
-      releases(updatePolicy: 'always')
-      snapshots(updatePolicy: 'never')
-    }
-    pom.project(pomConfiguration)
-  }
-}
-
-
-
 
 //
 // A single place to create the POM configuration, so it can be
